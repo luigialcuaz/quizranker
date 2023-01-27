@@ -1,12 +1,12 @@
 import React from "react";
 import QuizBtn from "../../components/QuizBtn";
 
-export default function Setup() {
+export default function Intro() {
   return (
-    <div className="container">
+    <div className="container-intro">
       <h1>Quizzical</h1>
       <p>This quiz is pretty hard...</p>
-      <QuizBtn className="quiz-btn" text="Start quiz" />
+      <QuizBtn text="Start quiz" />
     </div>
   );
 }
