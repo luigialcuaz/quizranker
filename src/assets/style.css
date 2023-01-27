@@ -1,0 +1,27 @@
+/* :root {
+} */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: inter, karla, sans-serif;
+  width: 100%;
+  height: 100%;
+  background-color: red;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+h1 {
+  text-align: center;
+}
+
+.quiz-btn {
+  padding: 20px;
+}
