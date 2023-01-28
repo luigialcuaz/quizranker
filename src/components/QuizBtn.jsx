@@ -1,5 +1,9 @@
 import React from "react";
 
 export default function QuizBtn(props) {
-  return <button className="quiz-btn">{props.text}</button>;
+  return (
+    <button onClick={props.handleClick} className="quiz-btn">
+      {props.text}
+    </button>
+  );
 }

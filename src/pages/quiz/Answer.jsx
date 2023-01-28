@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function Answer(props) {
-  return <button>{props}</button>;
+  return <button className="answer-btn">props.answersArray</button>;
 }
