@@ -1,5 +1,16 @@
 import React from "react";
 
 export default function Answer(props) {
-  return <button className="answer-btn">{props.answer}</button>;
+  // function
+
+  return (
+    <button
+      onClick={props.answerSelected}
+      className={
+        props.isSelected === props.id ? "answer-btn selected" : "answer-btn"
+      }
+    >
+      {props.answer}
+    </button>
+  );
 }

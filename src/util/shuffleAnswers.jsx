@@ -1,12 +1,16 @@
+import { nanoid } from "nanoid";
+
 export default function shuffleAnswers(incorrectArr, correctAnswer) {
   const answersArray = incorrectArr.map((answer) => ({
     answer,
     isCorrect: false,
+    id: nanoid(),
   }));
 
   answersArray.push({
     answer: correctAnswer,
     isCorrect: true,
+    id: nanoid(),
   });
 
   let currentIndex = answersArray.length,

@@ -7,7 +7,8 @@ import yellowBlob from "./assets/yellow-blob.png";
 
 export default function App() {
   const [quizStatus, setQuizStatus] = useState({
-    phase: "intro",
+    hasStarted: false,
+    hiscore: 0,
   });
 
   const [quizData, setQuizData] = useState();
@@ -32,8 +33,11 @@ export default function App() {
       });
   }, []);
 
-  function changePhase(phase) {
-    setQuizStatus({ phase: phase });
+  function changePhase() {
+    setQuizStatus((prevState) => ({
+      hasStarted: !prevState.hasStarted,
+      hiscore: prevState.hiscore,
+    }));
   }
 
   return (
@@ -43,14 +47,14 @@ export default function App() {
         alt="a yellow half-circle shaped blob on the top right corner of the screen"
         src={yellowBlob}
       />
-      {quizStatus.phase === "intro" ? (
-        <Intro handleClick={() => changePhase("main")} />
-      ) : (
+      {quizStatus.hasStarted ? (
         <Main
           quizStatus={quizStatus}
           quizData={quizData}
           changePhase={changePhase}
         />
+      ) : (
+        <Intro handleClick={() => changePhase()} />
       )}
       <img
         className="bot-left-blob"
