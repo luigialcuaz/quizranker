@@ -1,12 +1,12 @@
 export default function shuffleAnswers(incorrectArr, correctAnswer) {
   const answersArray = incorrectArr.map((answer) => ({
     answer,
-    correct: false,
+    isCorrect: false,
   }));
 
   answersArray.push({
     answer: correctAnswer,
-    correct: true,
+    isCorrect: true,
   });
 
   let currentIndex = answersArray.length,

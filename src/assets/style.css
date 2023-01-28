@@ -23,6 +23,10 @@ body {
   position: fixed;
 }
 
+#root button {
+  cursor: pointer;
+}
+
 .top-right-blob {
   top: 0;
   right: 0;
@@ -56,7 +60,7 @@ h1 {
 
 main {
   text-align: center;
-  padding: 50px 80px;
+  padding: 50px 90px;
 }
 
 .container-quiz {
@@ -84,7 +88,6 @@ main {
   padding: 18px 60px;
   border: none;
   border-radius: 15px;
-  cursor: pointer;
 }
 
 /*  */

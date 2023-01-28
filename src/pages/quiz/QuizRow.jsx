@@ -1,19 +1,19 @@
 import React from "react";
 import Answer from "./Answer";
+import { nanoid } from "nanoid";
 
 export default function QuizRow(props) {
-  // const answerElements = dataArr.map(data => (
-  //   <Answer
-  //     answersArray={}
-  //   />
-  // ))
+  const answerElements = props.quizSet.answersArr.map((answerObj) => (
+    <Answer
+      key={nanoid()}
+      answer={answerObj.answer}
+      isCorrect={answerObj.isCorrect}
+    />
+  ));
   return (
     <div className="container-quiz">
-      <h2>{props.quizData.question}</h2>
-      <Answer answersArray={props.quizData.answersArray} />
-      <Answer answersArray={props.quizData.answersArray} />
-      <Answer answersArray={props.quizData.answersArray} />
-      <Answer answersArray={props.quizData.answersArray} />
+      <h2>{props.quizSet.question}</h2>
+      {answerElements}
     </div>
   );
 }
