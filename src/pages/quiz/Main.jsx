@@ -20,12 +20,7 @@ export default function Main(props) {
           You scored {props.quizStatus.score}/5 correct answers
         </p>
       )}
-      <QuizBtn
-        text={
-          props.quizStatus.phase === "main" ? "Check answers" : "Play again"
-        }
-        // handleClick={}
-      />
+      <QuizBtn handleClick={checkAnswers} text={"Check answers"} />
     </main>
   );
 }

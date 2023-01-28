@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Intro from "./pages/intro/Intro";
 import Main from "./pages/quiz/Main";
-import shuffleAnswers from "./util/shuffleAnswers";
+import createData from "./util/createData";
 import blueBlob from "./assets/blue-blob.png";
 import yellowBlob from "./assets/yellow-blob.png";
 
@@ -19,15 +19,7 @@ export default function App() {
       .then((data) => {
         setQuizData(
           data.results.map((data) => {
-            const { incorrect_answers, correct_answer, question } = data;
-            const answersArr = shuffleAnswers(
-              incorrect_answers,
-              correct_answer
-            );
-            return {
-              question: question,
-              answersArr: answersArr,
-            };
+            return createData(data);
           })
         );
       });
