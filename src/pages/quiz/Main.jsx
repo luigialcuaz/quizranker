@@ -1,36 +1,35 @@
 import React, { useState } from "react";
 import QuizBtn from "../../components/QuizBtn";
 import QuizRow from "./QuizRow";
-import { nanoid } from "nanoid";
 
 export default function Main(props) {
   const [checkAnswers, setCheckAnswers] = useState("false");
-  const [selectedAnswerArray, setSelectedAnswerArray] = useState(
-    props.quizData.map((quizSet) => ({
-      [quizSet.questionId]: "",
-    }))
-  );
-
-  console.log(selectedAnswerArray);
+  const [selectedAnswerIds, setSelectedAnswerIds] = useState(() => {
+    let questionIds = {};
+    for (const quizSet of props.quizData) {
+      questionIds[quizSet.questionId] = "";
+    }
+    return questionIds;
+  });
 
   const quizElements = props.quizData.map((quizSet) => {
     return (
       <QuizRow
         key={quizSet.questionId}
         id={quizSet.questionId}
-        quizSet={quizSet}
-        answerIsSelected={answerIsSelected}
-        // testSelected={selectedAnswerArray[quizSet.questionId]}
+        question={quizSet.question}
+        answersArray={quizSet.answersArray}
+        answerSelected={answerSelected}
+        idSelected={selectedAnswerIds[quizSet.questionId]}
       />
     );
   });
 
-  function answerIsSelected(questionId, answerId) {
-    setSelectedAnswerArray((prevState) => ({
-      ...prevState,
+  function answerSelected(questionId, answerId) {
+    setSelectedAnswerIds((prevAnswerIds) => ({
+      ...prevAnswerIds,
       [questionId]: answerId,
     }));
-    console.log(selectedAnswerArray);
   }
 
   function handleClick(e) {
