@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Intro from "./pages/intro/Intro";
+import Forms from "./pages/intro/Forms";
 import Main from "./pages/quiz/Main";
 import createData from "./util/createData";
 import blueBlob from "./assets/blue-blob.png";
@@ -7,8 +8,8 @@ import yellowBlob from "./assets/yellow-blob.png";
 
 export default function App() {
   const [quizStatus, setQuizStatus] = useState({
-    hasStarted: false,
-    hiscore: 0,
+    page: "Intro",
+    prevScore: 0,
   });
 
   const [quizData, setQuizData] = useState();
@@ -24,18 +25,44 @@ export default function App() {
           })
         );
       });
-  }, [resetCount]);
+  }, []);
 
-  function toggleQuiz() {
-    setQuizStatus((prevState) => ({
-      hasStarted: !prevState.hasStarted,
-      hiscore: prevState.hiscore,
+  function nextPage(e, nextPage) {
+    setQuizStatus((prevStatus) => ({
+      ...!prevStatus,
+      page: nextPage,
     }));
+    // setQuizStatus((prevState) => ({
+    //   hasStarted: !prevState.hasStarted,
+    //   hiscore: prevState.hiscore,
+    // }));
 
-    if (quizStatus.hasStarted === true) {
-      setResetCount((prevCount) => prevCount + 1);
-    }
+    // if (quizStatus.hasStarted === true) {
+    //   setResetCount((prevCount) => prevCount + 1);
+    // }
   }
+
+  const currentPage = () => {
+    switch (quizStatus.page) {
+      case "Intro":
+        return (
+          <Intro
+            title="Quizzical"
+            description="This quiz is pretty hard..."
+            nextPage={(e) => nextPage(e, "Forms")}
+          />
+        );
+      case "Forms":
+        return <Forms nextPage={(e) => nextPage(e, "Main")} />;
+      case "Main":
+        <Main
+          quizStatus={quizStatus}
+          quizData={quizData}
+          // resetQuiz={toggleQuiz}
+        />;
+        break;
+    }
+  };
 
   return (
     <>
@@ -44,15 +71,25 @@ export default function App() {
         alt="a yellow half-circle shaped blob on the top right corner of the screen"
         src={yellowBlob}
       />
-      {quizStatus.hasStarted ? (
+      {currentPage()}
+      {/* <Intro
+        title="Quizzical"
+        description="This quiz is pretty hard..."
+        nextPage={(e) => nextPage(e, "Forms")}
+      /> */}
+      {/* {quizStatus.hasStarted ? (
         <Main
           quizStatus={quizStatus}
           quizData={quizData}
           resetQuiz={toggleQuiz}
         />
       ) : (
-        <Intro handleClick={toggleQuiz} />
-      )}
+        <Intro
+          title="Quizzical"
+          description="This quiz is pretty hard..."
+          handleClick={toggleQuiz}
+        />
+      )} */}
       <img
         className="bot-left-blob"
         alt="a blue half-circle shaped blob on the bottom left corner of the screen"
