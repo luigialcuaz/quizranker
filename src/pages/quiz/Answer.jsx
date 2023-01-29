@@ -1,14 +1,25 @@
 import React from "react";
 
 export default function Answer(props) {
-  // function
-
-  return (
-    <button
-      onClick={props.answerSelected}
-      className={props.isSelected ? "answer-btn selected" : "answer-btn"}
-    >
-      {props.answer}
-    </button>
-  );
+  if (props.quizComplete && props.isSelected) {
+    return (
+      <button
+        onClick={undefined}
+        className={
+          props.isCorrect ? "answer-btn correct" : "answer-btn incorrect"
+        }
+      >
+        {props.answer}
+      </button>
+    );
+  } else {
+    return (
+      <button
+        onClick={!props.quizComplete ? props.answerSelected : undefined}
+        className={props.isSelected ? "answer-btn selected" : "answer-btn"}
+      >
+        {props.answer}
+      </button>
+    );
+  }
 }

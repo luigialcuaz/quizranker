@@ -83,9 +83,22 @@ main {
   margin-right: 15px;
 }
 
+.selected,
+.correct,
+.incorrect {
+  border: none;
+}
+
 .selected {
   background-color: #d6dbf5;
-  border: none;
+}
+
+.correct {
+  background-color: #94d7a2;
+}
+
+.incorrect {
+  background-color: #f8bcbc;
 }
 
 /* Components */

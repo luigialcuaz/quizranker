@@ -9,7 +9,9 @@ export default function QuizRow(props) {
         id={answerObj.id}
         answer={answerObj.answer}
         isSelected={props.idSelected === answerObj.id}
+        isCorrect={answerObj.id === props.correctAnswerId}
         answerSelected={(e) => answerSelected(e, answerObj.id)}
+        quizComplete={props.isComplete}
       />
     );
   });

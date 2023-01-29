@@ -3,7 +3,7 @@ import QuizBtn from "../../components/QuizBtn";
 import QuizRow from "./QuizRow";
 
 export default function Main(props) {
-  const [checkAnswers, setCheckAnswers] = useState("false");
+  const [isComplete, setIsComplete] = useState(false);
   const [selectedAnswerIds, setSelectedAnswerIds] = useState(() => {
     let questionIds = {};
     for (const quizSet of props.quizData) {
@@ -17,10 +17,12 @@ export default function Main(props) {
       <QuizRow
         key={quizSet.questionId}
         id={quizSet.questionId}
+        correctAnswerId={quizSet.correctAnswerId}
         question={quizSet.question}
         answersArray={quizSet.answersArray}
         answerSelected={answerSelected}
         idSelected={selectedAnswerIds[quizSet.questionId]}
+        isComplete={isComplete}
       />
     );
   });
@@ -32,13 +34,13 @@ export default function Main(props) {
     }));
   }
 
-  function handleClick(e) {
-    const quizBtn = document.getElementById(e.target.id);
+  function completeQuiz(e) {
+    // const quizBtn = document.getElementById(e.target.id);
     // const scoreText = document.getElementById("score-text");
-    quizBtn.innerText = "Play again";
+    // quizBtn.innerText = "Play again";
     // console.log(quizBtn.parentElement);
-    setCheckAnswers(true);
-    props.resetQuiz();
+    setIsComplete(true);
+    // props.resetQuiz();
   }
 
   return (
@@ -47,8 +49,8 @@ export default function Main(props) {
       <p id="score-text">You scored /5 correct answers</p>
       <QuizBtn
         id="check-answers"
-        handleClick={(e) => handleClick(e)}
-        text={"Check answers"}
+        handleClick={(e) => completeQuiz(e)}
+        text={isComplete ? "Play again" : "Check answers"}
       />
     </main>
   );
