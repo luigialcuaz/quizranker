@@ -12,6 +12,7 @@ export default function App() {
   });
 
   const [quizData, setQuizData] = useState();
+  const [resetCount, setResetCount] = useState(0);
 
   useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=5&type=multiple")
@@ -23,13 +24,17 @@ export default function App() {
           })
         );
       });
-  }, []);
+  }, [resetCount]);
 
   function toggleQuiz() {
     setQuizStatus((prevState) => ({
       hasStarted: !prevState.hasStarted,
       hiscore: prevState.hiscore,
     }));
+
+    if (quizStatus.hasStarted === true) {
+      setResetCount((prevCount) => prevCount + 1);
+    }
   }
 
   return (
