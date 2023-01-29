@@ -25,7 +25,7 @@ export default function App() {
       });
   }, []);
 
-  function changePhase() {
+  function toggleQuiz() {
     setQuizStatus((prevState) => ({
       hasStarted: !prevState.hasStarted,
       hiscore: prevState.hiscore,
@@ -43,10 +43,10 @@ export default function App() {
         <Main
           quizStatus={quizStatus}
           quizData={quizData}
-          changePhase={changePhase}
+          resetQuiz={toggleQuiz}
         />
       ) : (
-        <Intro handleClick={() => changePhase()} />
+        <Intro handleClick={toggleQuiz} />
       )}
       <img
         className="bot-left-blob"

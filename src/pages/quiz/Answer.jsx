@@ -6,9 +6,7 @@ export default function Answer(props) {
   return (
     <button
       onClick={props.answerSelected}
-      className={
-        props.isSelected === props.id ? "answer-btn selected" : "answer-btn"
-      }
+      className={props.isSelected ? "answer-btn selected" : "answer-btn"}
     >
       {props.answer}
     </button>

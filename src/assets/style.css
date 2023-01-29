@@ -70,7 +70,7 @@ main {
   margin-bottom: 40px;
 }
 
-.score-text {
+#score-text {
   font-weight: bold;
 }
 

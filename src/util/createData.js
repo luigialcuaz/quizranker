@@ -17,6 +17,7 @@ export default function createData(data) {
 
   return {
     question,
+    questionId: nanoid(),
     answersArray: shuffle(answersArray),
     correctAnswerId,
   };
