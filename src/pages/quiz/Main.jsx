@@ -11,6 +11,7 @@ export default function Main(props) {
     }
     return questionIds;
   });
+  let count = 0;
 
   const quizElements = props.quizData.map((quizSet) => {
     return (
@@ -35,18 +36,32 @@ export default function Main(props) {
   }
 
   function completeQuiz(e) {
-    // const quizBtn = document.getElementById(e.target.id);
-    // const scoreText = document.getElementById("score-text");
-    // quizBtn.innerText = "Play again";
-    // console.log(quizBtn.parentElement);
-    setIsComplete(true);
-    // props.resetQuiz();
+    const scoreText = document.getElementById("score-text");
+    if (!isComplete) {
+      for (let answerId in selectedAnswerIds) {
+        for (let quizSet of props.quizData) {
+          if (selectedAnswerIds[answerId] === quizSet.correctAnswerId) {
+            count++;
+          }
+        }
+      }
+      setIsComplete(true);
+      scoreText.innerText = `You scored ${count}/5 correct answers`;
+    } else {
+      props.resetQuiz();
+    }
+  }
+
+  function retrieveCompleteAnswers() {
+    const correctAnswers =
+      document.getElementsByClassName("answer-btn correct");
+    return correctAnswers.length;
   }
 
   return (
     <main>
       {quizElements}
-      <p id="score-text">You scored /5 correct answers</p>
+      <p id="score-text">You scored 0/5 correct answers</p>
       <QuizBtn
         id="check-answers"
         handleClick={(e) => completeQuiz(e)}
