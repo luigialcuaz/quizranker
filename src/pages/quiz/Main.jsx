@@ -52,11 +52,15 @@ export default function Main(props) {
     }
   }
 
-  function retrieveCompleteAnswers() {
-    const correctAnswers =
-      document.getElementsByClassName("answer-btn correct");
-    return correctAnswers.length;
-  }
+  // function retrieveCompleteAnswers() {
+  //   const correctAnswers =
+  //     document.getElementsByClassName("answer-btn correct");
+  //   return correctAnswers.length;
+  // }
+
+  //current I manipulate dom to change the score
+  //this is because my let count=0; renders after setIsComplete(true)
+  //should change count/score to a state
 
   return (
     <main>
