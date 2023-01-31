@@ -60,6 +60,9 @@ h1 {
 }
 
 /* Forms */
+.container-intro-page form {
+  text-align: center;
+}
 
 .select-container {
   margin-block: 30px;

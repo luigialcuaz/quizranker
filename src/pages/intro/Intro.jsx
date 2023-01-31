@@ -9,7 +9,7 @@ export default function Intro(props) {
       <QuizBtn
         handleClick={props.nextPage}
         className="quiz-btn"
-        id="start-btn"
+        id="intro-btn"
         text="Start"
       />
     </div>
