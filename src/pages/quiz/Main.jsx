@@ -13,6 +13,7 @@ export default function Main(props) {
   });
   let count = 0;
 
+  console.log(count)
   const quizElements = props.quizData.map((quizSet) => {
     return (
       <QuizRow

@@ -3,6 +3,7 @@ import Intro from "./pages/intro/Intro";
 import Forms from "./pages/intro/Forms";
 import Main from "./pages/quiz/Main";
 import createData from "./util/createData";
+import getFormData from "./util/getFormData";
 import blueBlob from "./assets/blue-blob.png";
 import yellowBlob from "./assets/yellow-blob.png";
 
@@ -13,10 +14,15 @@ export default function App() {
   });
 
   const [quizData, setQuizData] = useState();
+  const [formData, setFormData] = useState({
+    category: '',
+    difficulty: ''
+  });
   const [resetCount, setResetCount] = useState(0);
+  console.log(formData);
 
   useEffect(() => {
-    fetch("https://opentdb.com/api.php?amount=5&type=multiple")
+    fetch(`https://opentdb.com/api.php?amount=10&type=multiple`)
       .then((res) => res.json())
       .then((data) => {
         setQuizData(
@@ -28,18 +34,15 @@ export default function App() {
     }, []);
 
   function nextPage(e, nextPage) {
+    if (e.target.id === "forms-btn"){
+      e.preventDefault();
+      setFormData(getFormData(e.target.id));
+    }
+    
     setQuizStatus((prevStatus) => ({
       ...!prevStatus,
       page: nextPage,
     }));
-    // setQuizStatus((prevState) => ({
-    //   hasStarted: !prevState.hasStarted,
-    //   hiscore: prevState.hiscore,
-    // }));
-
-    // if (quizStatus.hasStarted === true) {
-    //   setResetCount((prevCount) => prevCount + 1);
-    // }
   }
 
   const currentPage = () => {
@@ -53,13 +56,15 @@ export default function App() {
           />
         );
       case "Forms":
-        return <Forms title="Quizzical" nextPage={(e) => nextPage(e, "Main")} />;
+        return <Forms title="Quizzical" nextPage={(e) => nextPage(e, "Intro")} />;
       case "Main":
-        <Main
+        return (
+          <Main
           quizStatus={quizStatus}
           quizData={quizData}
           // resetQuiz={toggleQuiz}
-        />;
+          />
+        );
         break;
     }
   };
