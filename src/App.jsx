@@ -25,7 +25,7 @@ export default function App() {
           })
         );
       });
-  }, []);
+    }, []);
 
   function nextPage(e, nextPage) {
     setQuizStatus((prevStatus) => ({
@@ -53,7 +53,7 @@ export default function App() {
           />
         );
       case "Forms":
-        return <Forms nextPage={(e) => nextPage(e, "Main")} />;
+        return <Forms title="Quizzical" nextPage={(e) => nextPage(e, "Main")} />;
       case "Main":
         <Main
           quizStatus={quizStatus}

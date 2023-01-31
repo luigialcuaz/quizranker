@@ -1,5 +1,7 @@
-/* :root {
-} */
+:root {
+  --primary-blue: #293264;
+  --secondary-blue: #4d5b9e;
+}
 
 * {
   box-sizing: border-box;
@@ -9,13 +11,14 @@ html,
 body,
 #root,
 .container-intro-page {
+  font-size: 18px;
   height: 100%;
 }
 
 body {
   margin: 0;
   font-family: inter, karla, sans-serif;
-  color: #293264;
+  color: var(--primary-blue);
   background-color: #f5f7fb;
 }
 
@@ -54,6 +57,28 @@ body {
 h1 {
   font-family: karla, inter, sans-serif;
   margin-bottom: 0;
+}
+
+/* Forms */
+
+.select-container {
+  margin-block: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container-intro-page select {
+  font-family: inherit;
+  color: var(--primary-blue);
+  padding: 10px 40px 10px 5px;
+  box-shadow: 3px 2px 6px rgba(0, 0, 0, 0.4);
+  width: 350px;
+}
+
+.container-intro-page label {
+  margin-right: 20px;
+  font-weight: bold;
 }
 
 /* Main */
@@ -106,7 +131,7 @@ main {
 .quiz-btn {
   font-family: inherit;
   color: #f5f7fb;
-  background-color: #4d5b9e;
+  background-color: var(--secondary-blue);
   padding: 18px 60px;
   border: none;
   border-radius: 15px;
