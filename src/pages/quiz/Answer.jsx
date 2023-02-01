@@ -12,6 +12,15 @@ export default function Answer(props) {
         {props.answer}
       </button>
     );
+  } else if (props.quizComplete){
+    return (
+      <button
+        onClick={undefined}
+        className={props.isCorrect ? "answer-btn correct" : "answer-btn translucent"}
+      >
+        {props.answer}
+      </button>
+    )
   } else {
     return (
       <button

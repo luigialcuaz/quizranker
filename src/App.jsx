@@ -9,15 +9,12 @@ import yellowBlob from "./assets/yellow-blob.png";
 import getEntertainmentData from "./util/getEntertainmentData";
 
 export default function App() {
-  const [quizStatus, setQuizStatus] = useState({
-    page: "Intro",
-    prevScore: 0,
-  });
+  const [appPage, setAppPage] = useState();
 
   const [entertainmentData, setEntertainmentData] = useState();
   const [questionData, setQuestionData] = useState();
 
-  const [resetCount, setResetCount] = useState(0);
+  const [resetCount, setResetCount] = useState();
 
   useEffect(() => {
     getEntertainmentData().then(data => {
@@ -35,14 +32,11 @@ export default function App() {
       });
     }
     
-    setQuizStatus((prevStatus) => ({
-      ...!prevStatus,
-      page: nextPage,
-    }));
+    setAppPage(nextPage);
   }
 
   function currentPage() {
-    switch (quizStatus.page) {
+    switch (appPage) {
       case "Intro":
         return (
           <Intro
@@ -50,22 +44,26 @@ export default function App() {
           />
         );
       case "Forms":
-        return <Forms 
-          entertainmentData={entertainmentData} 
-          nextPage={(e) => nextPage(e, "Main")} 
-        />;
-      case "Main":
         return (
-          questionData ? 
-          <Main
-          quizStatus={quizStatus}
-          questionData={questionData}
-          // resetQuiz={toggleQuiz}
+          entertainmentData ? 
+          <Forms 
+            entertainmentData={entertainmentData} 
+            nextPage={(e) => nextPage(e, "Main")} 
           />
           :
           <div>Loading...</div>
         );
-        break;
+      case "Main":
+        return (
+          questionData ? 
+          <Main
+            appPage={appPage}
+            questionData={questionData}
+            // resetQuiz={toggleQuiz}
+          />
+          :
+          <div>Loading...</div>
+        );
     }
   };
 
@@ -76,25 +74,9 @@ export default function App() {
         alt="a yellow half-circle shaped blob on the top right corner of the screen"
         src={yellowBlob}
       />
-      {currentPage()}
-      {/* <Intro
-        title="Quizzical"
-        description="This quiz is pretty hard..."
-        nextPage={(e) => nextPage(e, "Forms")}
-      /> */}
-      {/* {quizStatus.hasStarted ? (
-        <Main
-          quizStatus={quizStatus}
-          quizData={quizData}
-          resetQuiz={toggleQuiz}
-        />
-      ) : (
-        <Intro
-          title="Quizzical"
-          description="This quiz is pretty hard..."
-          handleClick={toggleQuiz}
-        />
-      )} */}
+      {appPage ? currentPage() : 
+        <Intro nextPage={(e) => nextPage(e, "Forms")}/>
+      }
       <img
         className="bot-left-blob"
         alt="a blue half-circle shaped blob on the bottom left corner of the screen"
