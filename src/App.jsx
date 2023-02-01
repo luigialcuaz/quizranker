@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import Intro from "./pages/intro/Intro";
 import Forms from "./pages/intro/Forms";
 import Main from "./pages/quiz/Main";
-import createData from "./util/createData";
+import getQuestionData from "./util/getQuestionData";
 import getFormData from "./util/getFormData";
 import blueBlob from "./assets/blue-blob.png";
 import yellowBlob from "./assets/yellow-blob.png";
+import getEntertainmentData from "./util/getEntertainmentData";
 
 export default function App() {
   const [quizStatus, setQuizStatus] = useState({
@@ -13,25 +14,31 @@ export default function App() {
     prevScore: 0,
   });
 
-  const [quizData, setQuizData] = useState();
+  // const [quizData, setQuizData] = useState({
+  //   questionData: "",
+  //   entertainmentData: ""
+  // });
+
+  const [entertainmentData, setEntertainmentData] = useState();
+
   const [formData, setFormData] = useState({
     category: '',
     difficulty: ''
   });
   const [resetCount, setResetCount] = useState(0);
-  console.log(formData);
 
   useEffect(() => {
-    fetch(`https://opentdb.com/api.php?amount=10&type=multiple`)
-      .then((res) => res.json())
-      .then((data) => {
-        setQuizData(
-          data.results.map((data) => {
-            return createData(data);
-          })
-        );
-      });
-    }, []);
+    // getQuestionData().then(data => {
+    //   setQuizData(prevQuizData => ({
+    //     questionData: data,
+    //     entertainmentData: prevQuizData.entertainmentData
+    //   }))
+    // });
+
+    getEntertainmentData().then(data => {
+      setEntertainmentData(data.trivia_categories);
+    });
+  }, []);
 
   function nextPage(e, nextPage) {
     if (e.target.id === "forms-btn"){
@@ -56,7 +63,7 @@ export default function App() {
           />
         );
       case "Forms":
-        return <Forms title="Quizzical" nextPage={(e) => nextPage(e, "Intro")} />;
+        return <Forms entertainmentData={entertainmentData} title="Quizzical" nextPage={(e) => nextPage(e, "Intro")} />;
       case "Main":
         return (
           <Main
