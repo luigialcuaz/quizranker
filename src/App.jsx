@@ -9,12 +9,9 @@ import yellowBlob from "./assets/yellow-blob.png";
 import getEntertainmentData from "./util/getEntertainmentData";
 
 export default function App() {
-  const [appPage, setAppPage] = useState();
-
+  const [appPage, setAppPage] = useState('intro');
   const [entertainmentData, setEntertainmentData] = useState();
   const [questionData, setQuestionData] = useState();
-
-  const [resetCount, setResetCount] = useState();
 
   useEffect(() => {
     getEntertainmentData().then(data => {
@@ -31,38 +28,42 @@ export default function App() {
         setQuestionData(data);
       });
     }
+
+    if(nextPage === 'intro') {
+      setQuestionData();
+    }
     
     setAppPage(nextPage);
   }
 
   function currentPage() {
     switch (appPage) {
-      case "Intro":
+      case "intro":
         return (
           <Intro
-            nextPage={(e) => nextPage(e, "Forms")}
+            nextPage={(e) => nextPage(e, "forms")}
           />
         );
-      case "Forms":
+      case "forms":
         return (
           entertainmentData ? 
           <Forms 
             entertainmentData={entertainmentData} 
-            nextPage={(e) => nextPage(e, "Main")} 
+            nextPage={(e) => nextPage(e, "main")} 
           />
           :
-          <div>Loading...</div>
+          <div className="loading-text">Loading...</div>
         );
-      case "Main":
+      case "main":
         return (
           questionData ? 
           <Main
             appPage={appPage}
             questionData={questionData}
-            // resetQuiz={toggleQuiz}
+            nextPage={(e) => nextPage(e, "intro")} 
           />
           :
-          <div>Loading...</div>
+          <div className="loading-text">Loading...</div>
         );
     }
   };
@@ -74,9 +75,7 @@ export default function App() {
         alt="a yellow half-circle shaped blob on the top right corner of the screen"
         src={yellowBlob}
       />
-      {appPage ? currentPage() : 
-        <Intro nextPage={(e) => nextPage(e, "Forms")}/>
-      }
+      {currentPage()}
       <img
         className="bot-left-blob"
         alt="a blue half-circle shaped blob on the bottom left corner of the screen"

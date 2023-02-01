@@ -152,8 +152,12 @@ main {
   border-radius: 15px;
 }
 
-/* Util  */
+/* Other  */
 
 .none {
   display: none;
+}
+
+.loading-text {
+  font-size: 20px;
 }

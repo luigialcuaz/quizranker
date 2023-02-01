@@ -33,7 +33,7 @@ export default function Main(props) {
     }));
   }
 
-  function completeQuiz() {
+  function completeQuiz(e) {
     if (!isComplete) {
       for (let answerId in selectedAnswerIds) {
         for (let quizSet of props.questionData) {
@@ -47,7 +47,7 @@ export default function Main(props) {
 
       setIsComplete(true);
     } else {
-      props.resetQuiz();
+      props.nextPage(e);
     }
   }
 
@@ -58,7 +58,7 @@ export default function Main(props) {
       <QuizBtn
         id="check-answers"
         className="quiz-btn"
-        handleClick={() => completeQuiz()}
+        handleClick={(e) => completeQuiz(e)}
         text={isComplete ? "Play again" : "Check answers"}
       />
     </main>
