@@ -3,18 +3,19 @@ import QuizBtn from "../../components/QuizBtn";
 import QuizRow from "./QuizRow";
 
 export default function Main(props) {
+  console.log(props.questionData);
+
   const [isComplete, setIsComplete] = useState(false);
   const [selectedAnswerIds, setSelectedAnswerIds] = useState(() => {
     let questionIds = {};
-    for (const quizSet of props.quizData) {
+    for (const quizSet of props.questionData) {
       questionIds[quizSet.questionId] = "";
     }
     return questionIds;
   });
   let count = 0;
 
-  console.log(count)
-  const quizElements = props.quizData.map((quizSet) => {
+  const quizElements = props.questionData.map((quizSet) => {
     return (
       <QuizRow
         key={quizSet.questionId}
@@ -40,7 +41,7 @@ export default function Main(props) {
     const scoreText = document.getElementById("score-text");
     if (!isComplete) {
       for (let answerId in selectedAnswerIds) {
-        for (let quizSet of props.quizData) {
+        for (let quizSet of props.questionData) {
           if (selectedAnswerIds[answerId] === quizSet.correctAnswerId) {
             count++;
           }

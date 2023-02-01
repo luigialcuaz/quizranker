@@ -14,27 +14,12 @@ export default function App() {
     prevScore: 0,
   });
 
-  // const [quizData, setQuizData] = useState({
-  //   questionData: "",
-  //   entertainmentData: ""
-  // });
-
   const [entertainmentData, setEntertainmentData] = useState();
+  const [questionData, setQuestionData] = useState();
 
-  const [formData, setFormData] = useState({
-    category: '',
-    difficulty: ''
-  });
   const [resetCount, setResetCount] = useState(0);
 
   useEffect(() => {
-    // getQuestionData().then(data => {
-    //   setQuizData(prevQuizData => ({
-    //     questionData: data,
-    //     entertainmentData: prevQuizData.entertainmentData
-    //   }))
-    // });
-
     getEntertainmentData().then(data => {
       setEntertainmentData(data.trivia_categories);
     });
@@ -43,7 +28,12 @@ export default function App() {
   function nextPage(e, nextPage) {
     if (e.target.id === "forms-btn"){
       e.preventDefault();
-      setFormData(getFormData(e.target.id));
+      getQuestionData(
+        getFormData(e.target.id)
+      ).then(data => {
+        setQuestionData(data);
+        console.log(data);
+      });
     }
     
     setQuizStatus((prevStatus) => ({
@@ -52,7 +42,7 @@ export default function App() {
     }));
   }
 
-  const currentPage = () => {
+  function currentPage() {
     switch (quizStatus.page) {
       case "Intro":
         return (
@@ -63,14 +53,21 @@ export default function App() {
           />
         );
       case "Forms":
-        return <Forms entertainmentData={entertainmentData} title="Quizzical" nextPage={(e) => nextPage(e, "Intro")} />;
+        return <Forms 
+          entertainmentData={entertainmentData} 
+          title="Quizzical" 
+          nextPage={(e) => nextPage(e, "Main")} 
+        />;
       case "Main":
         return (
+          questionData ? 
           <Main
           quizStatus={quizStatus}
-          quizData={quizData}
+          questionData={questionData}
           // resetQuiz={toggleQuiz}
           />
+          :
+          <div>Loading...</div>
         );
         break;
     }

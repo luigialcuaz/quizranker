@@ -13,12 +13,5 @@ export default function getFormData(id) {
     difficulty = `difficulty=${quizFormData.get('difficulty')}`;
   }
 
-  if(quizFormData.get('category') && quizFormData.get('difficulty')) {
-    category += '&';
-  }
-
-  return ({
-    category, 
-    difficulty,
-  });
+  return `${difficulty + (category&&difficulty ? '&' + category: category)}`;
 }

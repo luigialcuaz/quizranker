@@ -1,13 +1,12 @@
 import React from "react";
-import getEntertainmentData from "../../util/getEntertainmentData";
 import { difficultyData } from '../../assets/difficultyData'
 import { nanoid } from 'nanoid'
 import QuizBtn from "../../components/QuizBtn";
 
 export default function Forms(props) {
-  
+
   const entertainmentElements = props.entertainmentData.map(category => (
-    <option key={nanoid()} id={category.id} value={category.name}>{category.name}</option>
+    <option key={nanoid()} value={category.id}>{category.name}</option>
   ))
 
   const difficultyElements = difficultyData.map(difficulty => (
