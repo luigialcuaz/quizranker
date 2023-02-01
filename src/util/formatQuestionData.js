@@ -1,5 +1,4 @@
 import { nanoid } from "nanoid";
-import { decode } from 'html-entities'
 import shuffle from "./shuffleAnswers";
 
 export default function createData(data) {
@@ -7,19 +6,25 @@ export default function createData(data) {
   const correctAnswerId = nanoid();
 
   const answersArray = incorrect_answers.map((answer) => ({
-    answer: decode(answer),
+    answer: decodeHtml(answer),
     id: nanoid(),
   }));
 
   answersArray.push({
-    answer: decode(correct_answer),
+    answer: decodeHtml(correct_answer),
     id: correctAnswerId,
   });
 
   return {
-    question: decode(question),
+    question: decodeHtml(question),
     questionId: nanoid(),
     answersArray: shuffle(answersArray),
     correctAnswerId,
   };
+}
+
+function decodeHtml(string) {
+  const text = document.createElement('textarea');
+  text.innerHTML = string;
+  return text.value;
 }
