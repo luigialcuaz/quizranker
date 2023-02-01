@@ -3,7 +3,6 @@ import QuizBtn from "../../components/QuizBtn";
 import QuizRow from "./QuizRow";
 
 export default function Main(props) {
-  console.log(props.questionData);
 
   const [isComplete, setIsComplete] = useState(false);
   const [selectedAnswerIds, setSelectedAnswerIds] = useState(() => {

@@ -4,8 +4,8 @@ import QuizBtn from "../../components/QuizBtn";
 export default function Intro(props) {
   return (
     <div className="container-intro-page">
-      <h1>{props.title}</h1>
-      <p>{props.description}</p>
+      <h1>Quizzical</h1>
+      <p>This quiz is pretty hard...</p>
       <QuizBtn
         handleClick={props.nextPage}
         className="quiz-btn"

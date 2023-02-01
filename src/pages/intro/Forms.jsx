@@ -15,7 +15,7 @@ export default function Forms(props) {
 
   return (
     <div className="container-intro-page">
-      <h1>{props.title}</h1>
+      <h1>Quizzical</h1>
       <form id="quiz-form">
         <div className="select-container">
           <label htmlFor="category">Category:</label>

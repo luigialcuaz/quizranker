@@ -32,7 +32,6 @@ export default function App() {
         getFormData(e.target.id)
       ).then(data => {
         setQuestionData(data);
-        console.log(data);
       });
     }
     
@@ -47,15 +46,12 @@ export default function App() {
       case "Intro":
         return (
           <Intro
-            title="Quizzical"
-            description="This quiz is pretty hard..."
             nextPage={(e) => nextPage(e, "Forms")}
           />
         );
       case "Forms":
         return <Forms 
           entertainmentData={entertainmentData} 
-          title="Quizzical" 
           nextPage={(e) => nextPage(e, "Main")} 
         />;
       case "Main":
