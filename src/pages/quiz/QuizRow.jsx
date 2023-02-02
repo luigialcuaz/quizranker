@@ -22,7 +22,9 @@ export default function QuizRow(props) {
   return (
     <div className="container-quiz">
       <h2>{props.quizSet.question}</h2>
-      {answerElements}
+      <section>
+        {answerElements}
+      </section>
     </div>
   );
 }

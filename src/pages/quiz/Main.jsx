@@ -42,7 +42,7 @@ export default function Main(props) {
           }
         }
       }
-      const scoreText = document.querySelector('.score-text.none');
+      const scoreText = document.querySelector('.score-text.bold.none');
       scoreText.classList.remove('none');
 
       setIsComplete(true);
@@ -54,7 +54,7 @@ export default function Main(props) {
   return (
     <main>
       {quizElements}
-      <p className="score-text none">You scored {correctCount}/5 correct answers</p>
+      <p className="score-text bold none">You scored {correctCount}/5 correct answers</p>
       <QuizBtn
         id="check-answers"
         className="quiz-btn"
