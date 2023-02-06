@@ -1,5 +1,5 @@
 import { Link, Route, Routes } from 'react-route-dom'
-import Forms from './pages/intro/Forms'
+import Forms from './pages/intro/QuizForm'
 import Intro from './pages/intro/Intro'
 
 export default function AppTest() {

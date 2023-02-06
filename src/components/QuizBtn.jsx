@@ -1,13 +1,20 @@
-import React from "react";
+import { Link } from "react-router-dom";
+
 
 export default function QuizBtn(props) {
   return (
-    <button
-      onClick={props.handleClick}
-      className={props.className}
-      id={props.id}
-    >
+    <Link 
+    className={props.className} 
+    to={`/${props.redirect}`}>
       {props.text}
-    </button>
+    </Link>
+
+    // <button
+    //   onClick={props.handleClick}
+    //   className={props.className}
+    //   id={props.id}
+    // >
+    //   {props.text}
+    // </button>
   );
 }

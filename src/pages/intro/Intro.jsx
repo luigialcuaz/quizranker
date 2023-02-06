@@ -7,10 +7,11 @@ export default function Intro(props) {
       <h1>QuizRanker</h1>
       <p>Click the button to give it a try!</p>
       <QuizBtn
-        handleClick={props.nextPage}
+        // handleClick={'forms'}
         className="quiz-btn"
         id="intro-btn"
-        text="Start"
+        text="Start Quiz"
+        redirect="quizForm"
       />
     </div>
   );

@@ -1,17 +1,20 @@
+import { nanoid } from "nanoid";
 import React from "react";
-import { difficultyData } from '../../assets/difficultyData'
-import { nanoid } from 'nanoid'
+import { difficultyData } from "../../assets/difficultyData";
 import QuizBtn from "../../components/QuizBtn";
 
-export default function Forms(props) {
+export default function QuizForm(props) {
+  const entertainmentElements = props.entertainmentData.map((category) => (
+    <option key={nanoid()} value={category.id}>
+      {category.name}
+    </option>
+  ));
 
-  const entertainmentElements = props.entertainmentData.map(category => (
-    <option key={nanoid()} value={category.id}>{category.name}</option>
-  ))
-
-  const difficultyElements = difficultyData.map(difficulty => (
-    <option key={nanoid()} value={difficulty.value}>{difficulty.difficulty}</option>
-  ))
+  const difficultyElements = difficultyData.map((difficulty) => (
+    <option key={nanoid()} value={difficulty.value}>
+      {difficulty.difficulty}
+    </option>
+  ));
 
   return (
     <div className="container-intro-page">

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Intro from "./pages/intro/Intro";
-import Forms from "./pages/intro/Forms";
+import QuizForm from "./pages/intro/QuizForm";
 import Main from "./pages/quiz/Main";
+import User from "./pages/profile/User";
 import getQuestionData from "./util/getQuestionData";
 import getFormData from "./util/getFormData";
 import getEntertainmentData from "./util/getEntertainmentData";
+import { Route, Routes } from "react-router-dom";
 
 export default function App() {
   const [appPage, setAppPage] = useState('intro');
@@ -30,45 +32,49 @@ export default function App() {
     if(nextPage === 'intro') {
       setQuestionData();
     }
-    
-    setAppPage(nextPage);
+    // setAppPage(nextPage);
   }
 
-  function currentPage() {
-    switch (appPage) {
-      case "intro":
-        return (
-          <Intro
-            nextPage={(e) => nextPage(e, "forms")}
-          />
-        );
-      case "forms":
-        return (
-          entertainmentData ? 
-          <Forms 
-            entertainmentData={entertainmentData} 
-            nextPage={(e) => nextPage(e, "main")} 
-          />
-          :
-          <div className="loading-text">Loading...</div>
-        );
-      case "main":
-        return (
-          questionData ? 
-          <Main
-            appPage={appPage}
-            questionData={questionData}
-            nextPage={(e) => nextPage(e, "intro")} 
-          />
-          :
-          <div className="loading-text">Loading...</div>
-        );
-    }
-  };
+  // function currentPage() {
+  //   switch (appPage) {
+  //     case "intro":
+  //       return (
+  //         <Intro
+  //           nextPage={(e) => nextPage(e, "forms")}
+  //         />
+  //       );
+  //     case "forms":
+  //       return (
+  //         entertainmentData ? 
+  //         <QuizForm 
+  //           entertainmentData={entertainmentData} 
+  //           nextPage={(e) => nextPage(e, "main")} 
+  //         />
+  //         :
+  //         <div className="loading-text">Loading...</div>
+  //       );
+  //     case "main":
+  //       return (
+  //         questionData ? 
+  //         <Main
+  //           appPage={appPage}
+  //           questionData={questionData}
+  //           nextPage={(e) => nextPage(e, "intro")} 
+  //         />
+  //         :
+  //         <div className="loading-text">Loading...</div>
+  //       );
+  //   }
+  // };
 
   return (
     <>
-      {currentPage()}
+      <Routes>
+        <Route path="/" element={<Intro />} />
+        <Route path="/user" element={<User />} />
+        <Route path="/quizForm" element={<QuizForm />} />
+      </Routes>
+      {/* {currentPage()} */}
     </>
   );
 }
