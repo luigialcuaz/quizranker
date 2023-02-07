@@ -4,7 +4,7 @@ import { difficultyData } from "../../assets/difficultyData";
 import QuizBtn from "../../components/QuizBtn";
 
 export default function QuizForm(props) {
-  const entertainmentElements = props.entertainmentData.map((category) => (
+  const categoryElements = props.categoryList.map((category) => (
     <option key={nanoid()} value={category.id}>
       {category.name}
     </option>
@@ -24,7 +24,7 @@ export default function QuizForm(props) {
           <label htmlFor="category">Category:</label>
           <select name="category">
             <option value="">All Categories</option>
-            {entertainmentElements}
+            {categoryElements}
           </select>
         </div>
         <div className="select-container">

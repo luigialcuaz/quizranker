@@ -4,18 +4,21 @@ import User from "./pages/profile/User";
 import Intro from "./pages/quiz/Intro";
 import Main from "./pages/quiz/Main";
 import QuizForm from "./pages/quiz/QuizForm";
-import getEntertainmentData from "./util/getEntertainmentData";
 import getFormData from "./util/getFormData";
 import getQuestionData from "./util/getQuestionData";
 
 export default function App() {
-  const [entertainmentData, setEntertainmentData] = useState();
+  const [categoryList, setCategoryList] = useState();
   const [questionData, setQuestionData] = useState();
 
   useEffect(() => {
-    getEntertainmentData().then((data) => {
-      setEntertainmentData(data.trivia_categories);
-    });
+    const getCategoryList = async () => {
+      const res = await fetch("https://opentdb.com/api_category.php");
+      const data = await res.json();
+      setCategoryList(data.trivia_categories);
+    };
+
+    getCategoryList();
   }, []);
 
   function nextPage(e, nextPage) {
@@ -40,8 +43,8 @@ export default function App() {
           path="/quizForm"
           element={
             <QuizForm
-              entertainmentData={entertainmentData}
-              nextPage={(e) => nextPage(e, "main")}
+              categoryList={categoryList}
+              // nextPage={(e) => nextPage(e, "main")}
             />
           }
         />
@@ -69,9 +72,9 @@ export default function App() {
 //       );
 //     case "forms":
 //       return (
-//         entertainmentData ?
+//         CategoryData ?
 //         <QuizForm
-//           entertainmentData={entertainmentData}
+//           CategoryData={CategoryData}
 //           nextPage={(e) => nextPage(e, "main")}
 //         />
 //         :
