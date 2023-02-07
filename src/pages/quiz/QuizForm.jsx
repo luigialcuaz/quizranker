@@ -38,14 +38,13 @@ export default function QuizForm(props) {
       `${difficulty + (category && difficulty ? "&" + category : category)}`
     );
 
-    console.log("worked");
     return navigate("/main");
   }
 
   return (
     <div className="container-intro-page">
       <h1>Quizzical</h1>
-      <form id="quiz-form" onSubmit={submitQuizForm}>
+      <form id="quiz-form">
         <div className="select-container">
           <label htmlFor="category">Category:</label>
           <select name="category">

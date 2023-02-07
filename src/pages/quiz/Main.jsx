@@ -1,33 +1,94 @@
-import React, { useState } from "react";
+import { nanoid } from "nanoid";
+import React, { useEffect, useState } from "react";
 import QuizBtn from "../../components/QuizBtn";
-import QuizRow from "./QuizRow";
+import shuffle from "../../util/shuffleAnswers";
 
 export default function Main(props) {
   const [questionData, setQuestionData] = useState();
-  console.log(props.formData);
-
-  console.log(props.questionData);
   const [isComplete, setIsComplete] = useState(false);
-  const [selectedAnswerIds, setSelectedAnswerIds] = useState(() => {
-    let questionIds = {};
-    for (const quizSet of props.questionData) {
-      questionIds[quizSet.questionId] = "";
-    }
-    return questionIds;
-  });
+  const [selectedAnswerIds, setSelectedAnswerIds] = useState();
+  //   () => {
+  //   let questionIds = {};
+  //   for (const quizSet of props.questionData) {
+  //     questionIds[quizSet.questionId] = "";
+  //   }
+  //   return questionIds;
+  // }
   const [correctCount, setCorrectCount] = useState(0);
 
-  const quizElements = props.questionData.map((quizSet) => {
-    return (
-      <QuizRow
-        key={quizSet.questionId}
-        quizSet={quizSet}
-        answerSelected={answerSelected}
-        idSelected={selectedAnswerIds[quizSet.questionId]}
-        isComplete={isComplete}
-      />
-    );
-  });
+  useEffect(() => {
+    fetch(
+      `https://opentdb.com/api.php?amount=5&type=multiple${
+        props.formData ? "&" + props.formData : ""
+      }`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        const questionData = data.results.map((quizData) => {
+          formatData(quizData);
+        });
+        console.log(questionData);
+
+        setQuestionData(questionData);
+        setSelectedAnswerIds(
+          questionData.map((questionSet) => questionSet.correctAnswerId)
+        );
+      });
+  }, []);
+
+  // function getQuestionData(formData) {
+  //   return fetch(
+  //     `https://opentdb.com/api.php?amount=5&type=multiple${
+  //       formData ? "&" + formData : ""
+  //     }`
+  //   )
+  // .then((res) => res.json())
+  // .then((data) => {
+  //       return data.results.map((data) => {
+  //         return formatQuestionData(data);
+  //       });
+  //     });
+  // }
+
+  function formatData(data) {
+    const { incorrect_answers, correct_answer, question } = data;
+    const correctAnswerId = nanoid();
+
+    const answersArray = incorrect_answers.map((answer) => ({
+      answer: decodeHtml(answer),
+      id: nanoid(),
+    }));
+
+    answersArray.push({
+      answer: decodeHtml(correct_answer),
+      id: correctAnswerId,
+    });
+
+    return {
+      question: decodeHtml(question),
+      questionId: nanoid(),
+      answersArray: shuffle(answersArray),
+      correctAnswerId,
+    };
+  }
+
+  function decodeHtml(string) {
+    const text = document.createElement("textarea");
+    text.innerHTML = string;
+    return text.value;
+  }
+
+  // const quizElements = questionData.map((quizSet) => {
+  //   return (
+  //     <QuizRow
+  //       key={quizSet.questionId}
+  //       quizSet={quizSet}
+  //       answerSelected={answerSelected}
+  //       idSelected={selectedAnswerIds[quizSet.questionId]}
+  //       isComplete={isComplete}
+  //     />
+  //   );
+  // });
 
   function answerSelected(questionId, answerId) {
     setSelectedAnswerIds((prevAnswerIds) => ({
@@ -56,7 +117,7 @@ export default function Main(props) {
 
   return (
     <main>
-      {quizElements}
+      {/* {quizElements} */}
       <p className="score-text bold none">
         You scored {correctCount}/5 correct answers
       </p>
