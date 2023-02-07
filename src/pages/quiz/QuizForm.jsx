@@ -35,10 +35,14 @@ export default function QuizForm(props) {
           </select>
         </div>
         <QuizBtn
-          handleClick={props.nextPage}
           className="quiz-btn"
-          id="forms-btn"
+          id="quizForm-btn"
           text="Start quiz"
+          redirect="main"
+          // handleClick={props.nextPage}
+          // className="quiz-btn"
+          // id="forms-btn"
+          // text="Start quiz"
         />
       </form>
     </div>

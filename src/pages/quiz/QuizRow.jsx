@@ -1,10 +1,10 @@
 import React from "react";
-import Answer from "./Answer";
+import AnswerBtn from "./AnswerBtn";
 
 export default function QuizRow(props) {
   const answerElements = props.quizSet.answersArray.map((answerObj) => {
     return (
-      <Answer
+      <AnswerBtn
         key={answerObj.id}
         answer={answerObj.answer}
         isSelected={props.idSelected === answerObj.id}
@@ -22,9 +22,7 @@ export default function QuizRow(props) {
   return (
     <div className="container-quiz">
       <h2>{props.quizSet.question}</h2>
-      <section>
-        {answerElements}
-      </section>
+      <section>{answerElements}</section>
     </div>
   );
 }

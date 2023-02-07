@@ -7,7 +7,6 @@ export default function Intro(props) {
       <h1>QuizRanker</h1>
       <p>Click the button to give it a try!</p>
       <QuizBtn
-        // handleClick={'forms'}
         className="quiz-btn"
         id="intro-btn"
         text="Start Quiz"
