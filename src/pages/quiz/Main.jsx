@@ -3,7 +3,10 @@ import QuizBtn from "../../components/QuizBtn";
 import QuizRow from "./QuizRow";
 
 export default function Main(props) {
+  const [questionData, setQuestionData] = useState();
+  console.log(props.formData);
 
+  console.log(props.questionData);
   const [isComplete, setIsComplete] = useState(false);
   const [selectedAnswerIds, setSelectedAnswerIds] = useState(() => {
     let questionIds = {};
@@ -38,12 +41,12 @@ export default function Main(props) {
       for (let answerId in selectedAnswerIds) {
         for (let quizSet of props.questionData) {
           if (selectedAnswerIds[answerId] === quizSet.correctAnswerId) {
-            setCorrectCount(prevCount => prevCount + 1);
+            setCorrectCount((prevCount) => prevCount + 1);
           }
         }
       }
-      const scoreText = document.querySelector('.score-text.bold.none');
-      scoreText.classList.remove('none');
+      const scoreText = document.querySelector(".score-text.bold.none");
+      scoreText.classList.remove("none");
 
       setIsComplete(true);
     } else {
@@ -54,7 +57,9 @@ export default function Main(props) {
   return (
     <main>
       {quizElements}
-      <p className="score-text bold none">You scored {correctCount}/5 correct answers</p>
+      <p className="score-text bold none">
+        You scored {correctCount}/5 correct answers
+      </p>
       <QuizBtn
         id="check-answers"
         className="quiz-btn"

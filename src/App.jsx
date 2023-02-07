@@ -4,12 +4,11 @@ import User from "./pages/profile/User";
 import Intro from "./pages/quiz/Intro";
 import Main from "./pages/quiz/Main";
 import QuizForm from "./pages/quiz/QuizForm";
-import getFormData from "./util/getFormData";
-import getQuestionData from "./util/getQuestionData";
 
 export default function App() {
   const [categoryList, setCategoryList] = useState();
-  const [questionData, setQuestionData] = useState();
+  const [formData, setFormData] = useState();
+  // const [questionData, setQuestionData] = useState();
 
   useEffect(() => {
     const getCategoryList = async () => {
@@ -21,18 +20,18 @@ export default function App() {
     getCategoryList();
   }, []);
 
-  function nextPage(e, nextPage) {
-    if (e.target.id === "forms-btn") {
-      e.preventDefault();
-      getQuestionData(getFormData(e.target.id)).then((data) => {
-        setQuestionData(data);
-      });
-    }
-
-    if (nextPage === "intro") {
-      setQuestionData();
-    }
+  function getQuizForm(formData) {
+    setFormData(formData);
   }
+
+  // function submitQuizForm(e) {
+  //     e.preventDefault();
+  //     getQuestionData(getFormData(e.target.id)).then((data) => {
+  //       setQuestionData(data);
+  //     });
+
+  //   // setQuestionData();
+  // }
 
   return (
     <>
@@ -42,18 +41,16 @@ export default function App() {
         <Route
           path="/quizForm"
           element={
-            <QuizForm
-              categoryList={categoryList}
-              // nextPage={(e) => nextPage(e, "main")}
-            />
+            <QuizForm categoryList={categoryList} getQuizForm={getQuizForm} />
           }
         />
         <Route
           path="/main"
           element={
             <Main
-              questionData={questionData}
-              nextPage={(e) => nextPage(e, "intro")}
+              formData={formData}
+              // questionData={questionData}
+              // nextPage={(e) => nextPage(e, "intro")}
             />
           }
         />

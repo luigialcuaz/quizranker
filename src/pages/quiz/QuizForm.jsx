@@ -1,9 +1,11 @@
 import { nanoid } from "nanoid";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { difficultyData } from "../../assets/difficultyData";
-import QuizBtn from "../../components/QuizBtn";
 
 export default function QuizForm(props) {
+  const navigate = useNavigate();
+
   const categoryElements = props.categoryList.map((category) => (
     <option key={nanoid()} value={category.id}>
       {category.name}
@@ -16,10 +18,34 @@ export default function QuizForm(props) {
     </option>
   ));
 
+  function submitQuizForm(e) {
+    e.preventDefault();
+    const quizForm = document.getElementById(e.target.id).parentElement;
+    const quizFormData = new FormData(quizForm);
+
+    let category = "";
+    let difficulty = "";
+
+    if (quizFormData.get("category")) {
+      category = `category=${quizFormData.get("category")}`;
+    }
+
+    if (quizFormData.get("difficulty")) {
+      difficulty = `difficulty=${quizFormData.get("difficulty")}`;
+    }
+
+    props.getQuizForm(
+      `${difficulty + (category && difficulty ? "&" + category : category)}`
+    );
+
+    console.log("worked");
+    return navigate("/main");
+  }
+
   return (
     <div className="container-intro-page">
       <h1>Quizzical</h1>
-      <form id="quiz-form">
+      <form id="quiz-form" onSubmit={submitQuizForm}>
         <div className="select-container">
           <label htmlFor="category">Category:</label>
           <select name="category">
@@ -34,16 +60,9 @@ export default function QuizForm(props) {
             {difficultyElements}
           </select>
         </div>
-        <QuizBtn
-          className="quiz-btn"
-          id="quizForm-btn"
-          text="Start quiz"
-          redirect="main"
-          // handleClick={props.nextPage}
-          // className="quiz-btn"
-          // id="forms-btn"
-          // text="Start quiz"
-        />
+        <button className="quiz-btn" id="quizForm-btn" onClick={submitQuizForm}>
+          Start quiz
+        </button>
       </form>
     </div>
   );

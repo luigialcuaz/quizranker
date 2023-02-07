@@ -1,7 +1,7 @@
 import React from "react";
 import QuizBtn from "../../components/QuizBtn";
 
-export default function Intro(props) {
+export default function Intro() {
   return (
     <div className="container-intro-page">
       <h1>QuizRanker</h1>
@@ -10,7 +10,7 @@ export default function Intro(props) {
         className="quiz-btn"
         id="intro-btn"
         text="Start Quiz"
-        redirect="quizForm"
+        path="quizForm"
       />
     </div>
   );
