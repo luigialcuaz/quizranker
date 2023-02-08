@@ -1,23 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import User from "./pages/profile/User";
 import Intro from "./pages/quiz/Intro";
 import Main from "./pages/quiz/Main";
 import QuizForm from "./pages/quiz/QuizForm";
 
 export default function App() {
-  const [categoryList, setCategoryList] = useState();
   const [formData, setFormData] = useState();
-
-  useEffect(() => {
-    const getCategoryList = async () => {
-      const res = await fetch("https://opentdb.com/api_category.php");
-      const data = await res.json();
-      setCategoryList(data.trivia_categories);
-    };
-
-    getCategoryList();
-  }, []);
 
   function getQuizForm(formData) {
     setFormData(formData);
@@ -26,15 +14,12 @@ export default function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Intro />} />
-        <Route path="/user" element={<User />} />
-        <Route
-          path="/quizForm"
-          element={
-            <QuizForm categoryList={categoryList} getQuizForm={getQuizForm} />
-          }
-        />
-        <Route path="/main" element={<Main formData={formData} />} />
+        <Route path="/quiz">
+          <Route index element={<Intro />} />
+          <Route path="*" element={<Intro />} />
+          <Route path="form" element={<QuizForm getQuizForm={getQuizForm} />} />
+          <Route path="main" element={<Main formData={formData} />} />
+        </Route>
       </Routes>
     </>
   );

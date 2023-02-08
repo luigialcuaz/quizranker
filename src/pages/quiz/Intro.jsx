@@ -10,7 +10,7 @@ export default function Intro() {
         className="quiz-btn"
         id="intro-btn"
         text="Start Quiz"
-        path="quizForm"
+        path="quiz/form"
       />
     </div>
   );

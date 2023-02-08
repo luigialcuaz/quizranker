@@ -106,6 +106,7 @@ main {
 .container-quiz {
   border-bottom: 1px solid var(--quizSet-border);
   margin-bottom: 1.5em;
+  width: 100%;
   text-align: left;
 }
 

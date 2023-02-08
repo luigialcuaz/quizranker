@@ -99,9 +99,9 @@ export default function Main(props) {
   }
 
   return (
-    <main>
+    <>
       {quizElements ? (
-        <>
+        <main>
           {quizElements}
           <p className="score-text bold none">
             You scored {correctCount}/5 correct answers
@@ -110,7 +110,7 @@ export default function Main(props) {
             <QuizBtn
               id="check-answers"
               className="quiz-btn"
-              path=""
+              path="quiz"
               text="Play again"
             />
           ) : (
@@ -122,10 +122,10 @@ export default function Main(props) {
               Check answers
             </button>
           )}
-        </>
+        </main>
       ) : (
-        <div className="loading-text">Loading...</div>
+        <div className="container-intro-page loading-text">Loading...</div>
       )}
-    </main>
+    </>
   );
 }
