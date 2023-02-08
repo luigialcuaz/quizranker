@@ -34,7 +34,8 @@ body button {
   cursor: pointer;
 }
 
-.top-right-blob, .bot-left-blob {
+.top-right-blob,
+.bot-left-blob {
   z-index: -10;
 }
 
@@ -124,8 +125,8 @@ main {
 
 /* Other Components */
 
-
 .quiz-btn {
+  display: inline-block;
   font-family: inherit;
   color: var(--white);
   text-decoration: none;
@@ -136,7 +137,8 @@ main {
   border-radius: 15px;
 }
 
-.quiz-btn:hover, .answer-btn:hover {
+.quiz-btn:hover,
+.answer-btn:hover {
   transform: scale(1.05);
 }
 .quiz-btn:hover {
@@ -177,7 +179,7 @@ main {
   opacity: 0.3;
 }
 
-.completeBtn{
+.completeBtn {
   cursor: default;
 }
 
@@ -227,9 +229,8 @@ main {
   .container-quiz section {
     gap: 0px 30px;
   }
-  
+
   .answer-btn {
     width: 45%;
   }
-
 }

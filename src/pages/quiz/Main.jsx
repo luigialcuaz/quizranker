@@ -5,14 +5,12 @@ import shuffle from "../../util/shuffleAnswers";
 import QuizRow from "./QuizRow";
 
 export default function Main(props) {
-  console.log("render main");
   const [questionData, setQuestionData] = useState();
   const [isComplete, setIsComplete] = useState(false);
   const [selectedAnswerIds, setSelectedAnswerIds] = useState();
   const [correctCount, setCorrectCount] = useState(0);
 
   useEffect(() => {
-    console.log("render main useEffect");
     const getData = async () => {
       const res = await fetch(
         `https://opentdb.com/api.php?amount=5&type=multiple${
@@ -33,7 +31,7 @@ export default function Main(props) {
     };
 
     getData();
-  }, [props.formData]);
+  }, []);
 
   function formatData(data) {
     const { incorrect_answers, correct_answer, question } = data;
@@ -84,10 +82,10 @@ export default function Main(props) {
     }));
   }
 
-  function completeQuiz(e) {
+  function completeQuiz() {
     if (!isComplete) {
       for (let answerId in selectedAnswerIds) {
-        for (let quizSet of props.questionData) {
+        for (let quizSet of questionData) {
           if (selectedAnswerIds[answerId] === quizSet.correctAnswerId) {
             setCorrectCount((prevCount) => prevCount + 1);
           }
@@ -97,8 +95,6 @@ export default function Main(props) {
       scoreText.classList.remove("none");
 
       setIsComplete(true);
-    } else {
-      props.nextPage(e);
     }
   }
 
@@ -110,12 +106,22 @@ export default function Main(props) {
           <p className="score-text bold none">
             You scored {correctCount}/5 correct answers
           </p>
-          <QuizBtn
-            id="check-answers"
-            className="quiz-btn"
-            handleClick={(e) => completeQuiz(e)}
-            text={isComplete ? "Play again" : "Check answers"}
-          />
+          {isComplete ? (
+            <QuizBtn
+              id="check-answers"
+              className="quiz-btn"
+              path=""
+              text="Play again"
+            />
+          ) : (
+            <button
+              id="check-answers"
+              className="quiz-btn"
+              onClick={completeQuiz}
+            >
+              Check answers
+            </button>
+          )}
         </>
       ) : (
         <div className="loading-text">Loading...</div>
