@@ -2,53 +2,38 @@ import { nanoid } from "nanoid";
 import React, { useEffect, useState } from "react";
 import QuizBtn from "../../components/QuizBtn";
 import shuffle from "../../util/shuffleAnswers";
+import QuizRow from "./QuizRow";
 
 export default function Main(props) {
+  console.log("render main");
   const [questionData, setQuestionData] = useState();
   const [isComplete, setIsComplete] = useState(false);
   const [selectedAnswerIds, setSelectedAnswerIds] = useState();
-  //   () => {
-  //   let questionIds = {};
-  //   for (const quizSet of props.questionData) {
-  //     questionIds[quizSet.questionId] = "";
-  //   }
-  //   return questionIds;
-  // }
   const [correctCount, setCorrectCount] = useState(0);
 
   useEffect(() => {
-    fetch(
-      `https://opentdb.com/api.php?amount=5&type=multiple${
-        props.formData ? "&" + props.formData : ""
-      }`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        const questionData = data.results.map((quizData) => {
-          formatData(quizData);
-        });
-        console.log(questionData);
+    console.log("render main useEffect");
+    const getData = async () => {
+      const res = await fetch(
+        `https://opentdb.com/api.php?amount=5&type=multiple${
+          props.formData ? "&" + props.formData : ""
+        }`
+      );
+      const data = await res.json();
+      const questionData = data.results.map((quizData) => formatData(quizData));
 
-        setQuestionData(questionData);
-        setSelectedAnswerIds(
-          questionData.map((questionSet) => questionSet.correctAnswerId)
-        );
+      setQuestionData(questionData);
+      setSelectedAnswerIds(() => {
+        let questionIds = {};
+        for (const quizSet of questionData) {
+          questionIds[quizSet.questionId] = "";
+        }
+        return questionIds;
       });
-  }, []);
+    };
 
-  // function getQuestionData(formData) {
-  //   return fetch(
-  //     `https://opentdb.com/api.php?amount=5&type=multiple${
-  //       formData ? "&" + formData : ""
-  //     }`
-  //   )
-  // .then((res) => res.json())
-  // .then((data) => {
-  //       return data.results.map((data) => {
-  //         return formatQuestionData(data);
-  //       });
-  //     });
-  // }
+    getData();
+  }, [props.formData]);
 
   function formatData(data) {
     const { incorrect_answers, correct_answer, question } = data;
@@ -78,17 +63,19 @@ export default function Main(props) {
     return text.value;
   }
 
-  // const quizElements = questionData.map((quizSet) => {
-  //   return (
-  //     <QuizRow
-  //       key={quizSet.questionId}
-  //       quizSet={quizSet}
-  //       answerSelected={answerSelected}
-  //       idSelected={selectedAnswerIds[quizSet.questionId]}
-  //       isComplete={isComplete}
-  //     />
-  //   );
-  // });
+  const quizElements = questionData
+    ? questionData.map((quizSet) => {
+        return (
+          <QuizRow
+            key={quizSet.questionId}
+            quizSet={quizSet}
+            answerSelected={answerSelected}
+            idSelected={selectedAnswerIds[quizSet.questionId]}
+            isComplete={isComplete}
+          />
+        );
+      })
+    : null;
 
   function answerSelected(questionId, answerId) {
     setSelectedAnswerIds((prevAnswerIds) => ({
@@ -117,16 +104,22 @@ export default function Main(props) {
 
   return (
     <main>
-      {/* {quizElements} */}
-      <p className="score-text bold none">
-        You scored {correctCount}/5 correct answers
-      </p>
-      <QuizBtn
-        id="check-answers"
-        className="quiz-btn"
-        handleClick={(e) => completeQuiz(e)}
-        text={isComplete ? "Play again" : "Check answers"}
-      />
+      {quizElements ? (
+        <>
+          {quizElements}
+          <p className="score-text bold none">
+            You scored {correctCount}/5 correct answers
+          </p>
+          <QuizBtn
+            id="check-answers"
+            className="quiz-btn"
+            handleClick={(e) => completeQuiz(e)}
+            text={isComplete ? "Play again" : "Check answers"}
+          />
+        </>
+      ) : (
+        <div className="loading-text">Loading...</div>
+      )}
     </main>
   );
 }

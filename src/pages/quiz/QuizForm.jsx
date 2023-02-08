@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { difficultyData } from "../../assets/difficultyData";
 
 export default function QuizForm(props) {
+  console.log("render quiz form");
   const navigate = useNavigate();
 
   const categoryElements = props.categoryList.map((category) => (

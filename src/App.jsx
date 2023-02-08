@@ -8,7 +8,6 @@ import QuizForm from "./pages/quiz/QuizForm";
 export default function App() {
   const [categoryList, setCategoryList] = useState();
   const [formData, setFormData] = useState();
-  // const [questionData, setQuestionData] = useState();
 
   useEffect(() => {
     const getCategoryList = async () => {
@@ -24,15 +23,6 @@ export default function App() {
     setFormData(formData);
   }
 
-  // function submitQuizForm(e) {
-  //     e.preventDefault();
-  //     getQuestionData(getFormData(e.target.id)).then((data) => {
-  //       setQuestionData(data);
-  //     });
-
-  //   // setQuestionData();
-  // }
-
   return (
     <>
       <Routes>
@@ -44,20 +34,20 @@ export default function App() {
             <QuizForm categoryList={categoryList} getQuizForm={getQuizForm} />
           }
         />
-        <Route
-          path="/main"
-          element={
-            <Main
-              formData={formData}
-              // questionData={questionData}
-              // nextPage={(e) => nextPage(e, "intro")}
-            />
-          }
-        />
+        <Route path="/main" element={<Main formData={formData} />} />
       </Routes>
     </>
   );
 }
+
+// function submitQuizForm(e) {
+//     e.preventDefault();
+//     getQuestionData(getFormData(e.target.id)).then((data) => {
+//       setQuestionData(data);
+//     });
+
+//   // setQuestionData();
+// }
 
 // function currentPage() {
 //   switch (appPage) {
